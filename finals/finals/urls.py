@@ -22,5 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.homepage),
     path('about/',views.about),
-    path('cashier/', include('cashier.urls'))
+    path('login/', include('login.urls')),
+    path('users/', include('users.urls')),
+    path('cashier/', include('cashier.urls')),
+    path('inventory/', include('inventory.urls'))
 ]
