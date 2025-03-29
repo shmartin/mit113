@@ -38,3 +38,4 @@ Inventory page is where to keep track of the inventory.
 
 ### Database design
 
+The database will have to store daily transactions and inventory changes. 
