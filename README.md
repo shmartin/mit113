@@ -19,3 +19,22 @@ The possible user of the website are the following:
 - Cashier
 
 The website design should also be considered for easy navigation and usage.
+
+## Parts of the webpage
+
+This section details how each part of the webpage functions
+
+### Login page
+
+Logging in with an authenticated user is required to use all other functions of the website. 
+
+### Cashier page
+
+Cashier page is where transactions are done
+
+### Inventory page
+
+Inventory page is where to keep track of the inventory.
+
+### Database design
+
