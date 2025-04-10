@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Inventory
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <main class="main-content">
+            <h2>Items Overview</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lechon Kawali</td>
+                            <td>100</td>
+                            <td>2025-04-01</td>
+                            <td>
+                                <button>View</button>
+                                <button>Edit</button>
+                                <button>Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Pork Steak</td>
+                            <td>50</td>
+                            <td>2025-04-01</td>
+                            <td>
+                                <button>View</button>
+                                <button>Edit</button>
+                                <button>Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Bangus</td>
+                            <td>200</td>
+                            <td>2025-04-01</td>
+                            <td>
+                                <button>View</button>
+                                <button>Edit</button>
+                                <button>Delete</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <button>&laquo; Previous</button>
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <button>Next &raquo;</button>
+            </div>
+        </main>
+{% endblock %}
