@@ -8,12 +8,40 @@ body {
     min-height: 100vh;
     display: grid;
     place-content: center;
-    font-size: 3rem;
+    font-size: 1rem;
     background-color: #90ee90;
-    color: whitesmoke;
+    color: black;
     display: flex;
     flex-flow: column;
 }
+
+nav {
+    padding: 1rem;
+    background-color: #087830;
+    color: black;
+    font-size: 2.5rem;
+}
+
+main {
+    flex-grow: 1;
+    /*display: grid;*/
+    /*place-content: center;*/
+}
+
+h1, p {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+a:hover {
+    opacity: .85;
+}
+
+/* Login Page */
 
 .card {
     overflow: hidden;
@@ -63,28 +91,379 @@ body {
     transition: all 0.375s;
 }
 
-nav {
-    padding: 1rem;
-    background-color: #087830;
-    color: black;
-    font-size: 2.5rem;
+/* Inventory Page */
+
+.pos-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-main {
+.main-content {
     flex-grow: 1;
-    display: grid;
-    place-content: center;
+    padding: 20px;
+    background-color: #fff;
 }
 
-h1, p {
+.main-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.table-responsive {
+    overflow-x: auto; /* For horizontal scrolling on smaller screens */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+tbody td button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+}
+
+tbody td button:last-child {
+    margin-right: 0;
+}
+
+tbody td button:hover {
+    background-color: #0056b3;
+}
+
+.pagination {
     text-align: center;
 }
 
-a {
-    text-decoration: none;
-    color: whitesmoke;
+.pagination button, .pagination span {
+    padding: 8px 12px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-a:hover {
-    opacity: .85;
+.pagination button:hover {
+    background-color: #eee;
+}
+
+/* Cashier Page */
+
+.store-info h1 {
+    margin: 0 0 5px 0;
+    font-size: 2em;
+}
+
+.store-info p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #ddd;
+}
+
+.user-actions button {
+    background: none;
+    color: white;
+    border: 1px solid white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.user-actions button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.pos-main {
+    display: flex;
+    flex-grow: 1;
+    padding: 20px;
+    gap: 20px;
+}
+
+.left-panel {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Left Panel Styles */
+.product-categories, .product-list, .quick-input {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.product-categories h2, .product-list h2, .quick-input h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.product-categories ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.product-categories ul li {
+    margin-bottom: 10px;
+}
+
+.product-categories ul li a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.product-categories ul li a:hover {
+    background-color: #f0f0f0;
+}
+
+.product-list .product-grid {
+    max-height: 31em;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.product-list .product-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.product-list .product-card img {
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 5px;
+}
+
+.product-list .product-card h3 {
+    margin: 5px 0;
+    font-size: 1em;
+}
+
+.product-list .product-card .price {
+    display: block;
+    color: #5cb85c;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.product-list .product-card .add-to-cart {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.product-list .product-card .add-to-cart:hover {
+    background-color: #0056b3;
+}
+
+.quick-input input[type="text"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.quick-input button {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.quick-input button:hover {
+    background-color: #5a6268;
+}
+
+/* Right Panel Styles */
+.transaction-area, .payment-area {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.transaction-area h2, .payment-area h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.transaction-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 250px; /* Adjust as needed */
+    overflow-y: auto;
+}
+
+.transaction-items .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.transaction-items .item:last-child {
+    border-bottom: none;
+}
+
+.transaction-items .item .name {
+    flex-grow: 1;
+}
+
+.transaction-items .item .quantity {
+    margin-left: 10px;
+    color: #777;
+}
+
+.transaction-items .item .price {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.transaction-items .item .remove {
+    background: none;
+    color: #dc3545;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    margin-left: 10px;
+}
+
+.transaction-summary {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 2px solid #eee;
+}
+
+.transaction-summary .summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.transaction-summary .total {
+    font-weight: bold;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.payment-methods {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.payment-methods .payment-button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.payment-methods .payment-button.card {
+    background-color: #007bff;
+}
+
+.payment-methods .payment-button.mobile {
+    background-color: #f39c12;
+}
+
+.payment-methods .payment-button:hover {
+    opacity: 0.9;
+}
+
+.payment-input label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.payment-input input[type="number"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.payment-input .complete-sale {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.payment-input .complete-sale:hover {
+    background-color: #1e7e34;
 }
