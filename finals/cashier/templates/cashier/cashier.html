@@ -10,90 +10,14 @@
             <section class="product-list">
                 <h2>Products</h2>
                 <div class="product-grid">
-                    <div class="product-card">
-                        <img src="placeholder.png" alt="Product A">
-                        <h3>Combo Meal A</h3>
-                        <span class="price">Php 100.00</span>
-                        <button class="add-to-cart">Add</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="placeholder.png" alt="Product A">
-                        <h3>Combo Meal A</h3>
-                        <span class="price">Php 100.00</span>
-                        <button class="add-to-cart">Add</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="placeholder.png" alt="Product A">
-                        <h3>Combo Meal A</h3>
-                        <span class="price">Php 100.00</span>
-                        <button class="add-to-cart">Add</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="placeholder.png" alt="Product A">
-                        <h3>Combo Meal A</h3>
-                        <span class="price">Php 100.00</span>
-                        <button class="add-to-cart">Add</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="placeholder.png" alt="Product A">
-                        <h3>Combo Meal A</h3>
-                        <span class="price">Php 100.00</span>
-                        <button class="add-to-cart">Add</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="placeholder.png" alt="Product A">
-                        <h3>Combo Meal A</h3>
-                        <span class="price">Php 100.00</span>
-                        <button class="add-to-cart">Add</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="placeholder.png" alt="Product A">
-                        <h3>Combo Meal A</h3>
-                        <span class="price">Php 100.00</span>
-                        <button class="add-to-cart">Add</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="placeholder.png" alt="Product A">
-                        <h3>Combo Meal A</h3>
-                        <span class="price">Php 100.00</span>
-                        <button class="add-to-cart">Add</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="placeholder.png" alt="Product A">
-                        <h3>Combo Meal A</h3>
-                        <span class="price">Php 100.00</span>
-                        <button class="add-to-cart">Add</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="placeholder.png" alt="Product A">
-                        <h3>Combo Meal A</h3>
-                        <span class="price">Php 100.00</span>
-                        <button class="add-to-cart">Add</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="placeholder.png" alt="Product A">
-                        <h3>Combo Meal A</h3>
-                        <span class="price">Php 100.00</span>
-                        <button class="add-to-cart">Add</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="placeholder.png" alt="Product A">
-                        <h3>Combo Meal A</h3>
-                        <span class="price">Php 100.00</span>
-                        <button class="add-to-cart">Add</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="placeholder.png" alt="Product A">
-                        <h3>Combo Meal A</h3>
-                        <span class="price">Php 100.00</span>
-                        <button class="add-to-cart">Add</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="placeholder.png" alt="Product A">
-                        <h3>Combo Meal A</h3>
-                        <span class="price">Php 100.00</span>
-                        <button class="add-to-cart">Add</button>
-                    </div>
+                    {% for i in meals %}
+                        <div class="product-card">
+                            <img src="static/images/{{ i }}.png" alt="{{ i }}.png">
+                            <h3>{{ i }}</h3>
+                            <span class="price">Php 100.00</span>
+                            <button class="add-to-cart">Add</button>
+                        </div>
+                    {% endfor %}
                     </div>
             </section>
             <section class="quick-input">
