@@ -19,9 +19,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for i in meals %}
                         <tr>
-                            <td>Lechon Kawali</td>
-                            <td>100</td>
+                            <td>{{ i }}</td>
+                            <td>{{ quantity }}</td>
                             <td>2025-04-01</td>
                             <td>
                                 <button>View</button>
@@ -29,27 +30,8 @@
                                 <button>Delete</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Pork Steak</td>
-                            <td>50</td>
-                            <td>2025-04-01</td>
-                            <td>
-                                <button>View</button>
-                                <button>Edit</button>
-                                <button>Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Bangus</td>
-                            <td>200</td>
-                            <td>2025-04-01</td>
-                            <td>
-                                <button>View</button>
-                                <button>Edit</button>
-                                <button>Delete</button>
-                            </td>
-                        </tr>
-                        </tbody>
+                        {% endfor %}
+                    </tbody>
                 </table>
             </div>
             <div class="pagination">

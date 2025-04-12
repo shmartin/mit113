@@ -12,7 +12,7 @@
                 <div class="product-grid">
                     {% for i in meals %}
                         <div class="product-card">
-                            <img src="static/images/{{ i }}.png" alt="{{ i }}.png">
+                            <img src="static/images/{{ i }}.png" alt=" ">
                             <h3>{{ i }}</h3>
                             <span class="price">Php 100.00</span>
                             <button class="add-to-cart">Add</button>
@@ -30,18 +30,14 @@
             <div class="transaction-area">
                 <h2>Transaction</h2>
                 <ul class="transaction-items">
-                    <li class="item">
-                        <span class="name">Product A</span>
-                        <span class="quantity">x 1</span>
-                        <span class="price">Php 12.50</span>
-                        <button class="remove">X</button>
-                    </li>
-                    <li class="item">
-                        <span class="name">Product B</span>
-                        <span class="quantity">x 2</span>
-                        <span class="price">Php 16.00</span>
-                        <button class="remove">X</button>
-                    </li>
+                    {% for i in meals %}
+                        <li class="item">
+                            <span class="name">{{ i }}</span>
+                            <span class="quantity">x 1</span>
+                            <span class="price">Php 12.50</span>
+                            <button class="remove">X</button>
+                        </li>
+                    {% endfor %}
                     </ul>
                 <div class="transaction-summary">
                     <div class="summary-row">
@@ -49,7 +45,7 @@
                         <span class="amount">Php 28.50</span>
                     </div>
                     <div class="summary-row">
-                        <span>Tax (5%):</span>
+                        <span>Tax (12%):</span>
                         <span class="amount">Php 1.43</span>
                     </div>
                     <div class="summary-row total">
@@ -67,6 +63,20 @@
                 <div class="payment-input">
                     <label for="amount-tendered">Amount Tendered:</label>
                     <input type="number" id="amount-tendered">
+                    <div class="keypad">
+                        <button class="key">7</button>
+                        <button class="key">8</button>
+                        <button class="key">9</button>
+                        <button class="key">4</button>
+                        <button class="key">5</button>
+                        <button class="key">6</button>
+                        <button class="key">1</button>
+                        <button class="key">2</button>
+                        <button class="key">3</button>
+                        <button class="key clear">C</button>
+                        <button class="key">0</button>
+                        <button class="key backspace">&larr;</button>
+                    </div>
                     <button class="complete-sale">Complete Sale</button>
                 </div>
             </div>

@@ -467,3 +467,43 @@ tbody td button:hover {
 .payment-input .complete-sale:hover {
     background-color: #1e7e34;
 }
+
+/* keypad */
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    background-color: #e0e0e0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.key {
+    padding: 15px;
+    font-size: 1.2em;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.key:hover {
+    background-color: #eee;
+}
+
+.clear {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.clear:hover {
+    background-color: #e05858;
+}
+
+.backspace {
+    font-size: 1.5em;
+}
