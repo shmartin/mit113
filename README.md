@@ -39,3 +39,12 @@ Inventory page is where to keep track of the inventory.
 ### Database design
 
 The database will have to store daily transactions and inventory changes. 
+
+### TODO
+
+- Page auto refresh on database update
+    - Refresh orders list in cashier page
+    - Add product to orders list on clicked card in products section in cashier page
+- User authentication
+    - Password protected pages
+- Fix dynamic UI

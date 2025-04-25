@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from inventory.models import Product
 
 # Create your views here.
 def cashier(request):
@@ -24,4 +25,5 @@ def cashier(request):
                 'Salpicao',
                 'Chicken Pastil',
             ]
-    return render(request, 'cashier/cashier.html', {'meals': meals})
+    all_products = Product.objects.all()
+    return render(request, 'cashier/cashier.html', {'products': all_products})

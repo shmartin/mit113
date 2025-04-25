@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import random as rand
+from .models import Product
 
 # Create your views here.
 def inventory_render(request):
@@ -25,5 +26,5 @@ def inventory_render(request):
                 'Salpicao',
                 'Chicken Pastil',
             ]
-    quantity = rand.sample(range(0,30), len(meals))
-    return render(request, 'inventory/inventory.html', {'meals': meals, 'quantity': quantity})
+    all_products = Product.objects.all()
+    return render(request, 'inventory/inventory.html', {'products': all_products})

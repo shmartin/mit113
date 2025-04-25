@@ -15,15 +15,17 @@
                             <th>Name</th>
                             <th>Quantity</th>
                             <th>Date</th>
+                            <th>Price</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for i in meals %}
+                        {% for i in products %}
                         <tr>
-                            <td>{{ i }}</td>
-                            <td>{{ quantity }}</td>
-                            <td>2025-04-01</td>
+                            <td>{{ i.pname }}</td>
+                            <td>{{ i.pquantity }}</td>
+                            <td>{{ i.pdate }}</td>
+                            <td>{{ i.pprice }}</td>
                             <td>
                                 <button>View</button>
                                 <button>Edit</button>
