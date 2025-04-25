@@ -2,8 +2,8 @@ from django.db import models
 
 # Create your models here.
 
-# class Cashier(models.Model):
-#     title = models.CharField(max_length=75)
-#     body = models.TextField()
-#     slug = models.SlugField()
-#     date = models.DateTimeField(auto_now_add=True)
+class Order(models.Model):
+    oorder = 1
+    odate = 1
+    oquantity = 1
+    oprice = 1

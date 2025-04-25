@@ -28,13 +28,26 @@ This section details how each part of the webpage functions
 
 Logging in with an authenticated user is required to use all other functions of the website. 
 
-### Cashier page
+### Cashier Page Features
 
-Cashier page is where transactions are done
+- Dynamic Products section*
+- New products added in ***Inventory*** appears automatically**
+- Images for new products can easily be added by just copying image file to appropriate folder***
+- Built-in numpad
+- Quick search for product
 
-### Inventory page
+> *Notes:*
+>  
+> **Unavailable products will not appear*
+>
+> ***Dynamic loading of UI elements*
+>
+> ****Image folder is in static/images/*
 
-Inventory page is where to keep track of the inventory.
+### Inventory Page Features
+
+- Simple UI for easier inventory management
+- Add, update or delete inventory entry within the webpage
 
 ### Database design
 
@@ -42,9 +55,9 @@ The database will have to store daily transactions and inventory changes.
 
 ### TODO
 
-- Page auto refresh on database update
-    - Refresh orders list in cashier page
-    - Add product to orders list on clicked card in products section in cashier page
-- User authentication
-    - Password protected pages
-- Fix dynamic UI
+- [ ] Page auto refresh on database update -- htmx integration
+    - [ ] Refresh orders list in cashier page
+    - [ ] Add product to orders list on clicked card in products section in cashier page
+- [ ] User authentication
+    - [ ] Password protected pages
+- [ ] Fix dynamic UI
