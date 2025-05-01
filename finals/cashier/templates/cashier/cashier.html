@@ -10,14 +10,21 @@
             <section class="product-list">
                 <h2>Products</h2>
                 <div class="product-grid">
-                    {% for i in products %}
+                    {% for i in product|dictsort:"pname" %}
                         {% if i.pquantity > 0 %}
                             <div class="product-card">
                                 <img src="../../static/images/{{ i.pname }}.jpeg" alt=" ">
                                 <h3>{{ i.pname }}</h3>
                                 <h3>{{ i.pquantity }}</h3>
                                 <span class="price">Php {{ i.pprice }}.00</span>
-                                <button class="add-to-cart">Add</button>
+                                <button value="{{ i.id }}" name="add" class="add-to-cart" action="/cashier">Add</button>
+                            </div>
+                        {% else %}
+                            <div class="product-card">
+                                <img src="../../static/images/{{ i.pname }}_gray.jpeg" alt=" ">
+                                <h3>{{ i.pname }}</h3>
+                                <h3>Out of Stock</h3>
+                                <span class="price">Php {{ i.pprice }}.00</span>
                             </div>
                         {% endif %}
                     {% endfor %}

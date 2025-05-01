@@ -1,0 +1,16 @@
+{% extends 'layout_login.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h2>POS</h2>
+        <form class="form" action="/inventory/" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="form-submit" action="">Sign In</button>
+        </form> 
+    </div>
+{% endblock %}

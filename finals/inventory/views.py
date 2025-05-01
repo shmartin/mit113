@@ -1,30 +1,20 @@
-from django.shortcuts import render
-import random as rand
-from .models import Product
+from django.shortcuts import render, redirect
+from .models import Inventory
+from .forms import InventoryForm
 
 # Create your views here.
-def inventory_render(request):
-    meals = [   'Beef Tapa',
-                'Beef Pares',
-                'Beef Nilaga',
-                'Beef Walastik',
-                'Boneless Bangus',
-                'Garlic Longganisa',
-                'Spicy Longganisa',
-                'Delicious Longganisa',
-                'Grilled Porkchop',
-                'Grilled Liempo',
-                'Pork Adobo',
-                'Pork Marinated',
-                'Pork Tocino',
-                'Pork Steak',
-                'Pork Sisig',
-                'Lechon Kawali',
-                'Crispy Kare-kare',
-                'Crispy Binagoongan',
-                'Pigar-Pigar',
-                'Salpicao',
-                'Chicken Pastil',
-            ]
-    all_products = Product.objects.all()
-    return render(request, 'inventory/inventory.html', {'products': all_products})
+def inventory(request):
+    form = InventoryForm()
+    all_inventory = Inventory.objects.all().select_related('pid')
+
+    if request.method == 'POST':
+        if 'add' in request.POST:
+            form = InventoryForm(request.POST)
+            form.save()
+            return redirect('/inventory')
+
+    context = {}
+    context['inventory'] = all_inventory
+    context['form'] = form
+
+    return render(request, 'inventory/inventory.html', context)

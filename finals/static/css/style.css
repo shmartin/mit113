@@ -110,6 +110,21 @@ a:hover {
     margin-bottom: 20px;
 }
 
+.main-content button  {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.main-content button:hover {
+    background-color: #0056b3;
+}
+
 .table-responsive {
     overflow-x: auto; /* For horizontal scrolling on smaller screens */
 }
