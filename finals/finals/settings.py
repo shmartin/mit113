@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'users',
 ]
 
+AUTH_PROFILE_MODULE = 'users.Employee'
+LOGIN_REDIRECT_URL = '/login/'
+LOGIN_URL = '/login/'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

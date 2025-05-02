@@ -22,6 +22,22 @@ nav {
     font-size: 2.5rem;
 }
 
+/* Logout Button */
+
+.logout {
+    display: inline-block;
+}
+
+.logout-button {
+    font-size: 2.5rem;
+    background-color: black;
+    border: none;
+}
+
+.logout-button:hover {
+    opacity: .85;
+}
+
 main {
     flex-grow: 1;
     /*display: grid;*/

@@ -11,16 +11,15 @@
         | POS
     </title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="../../static/js/htmx.min.js"></script>
 </head>
 <body>
     <nav>
-        <a href="/">Home</a> | 
-        <a href="/about">About</a> | 
         <a href="/cashier">Cashier</a> |
         <a href="/inventory">Inventory</a> |
-        <a href="/login">Users</a>
-        <button>Logout</button>
+        <form class="logout" action="/login/" method="POST">
+            {% csrf_token %}
+            <button class="logout-button">Logout</button>
+        </form>
     </nav>
     <main>
         {% block content %}

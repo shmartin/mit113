@@ -7,10 +7,10 @@
 {% block content %}
     <div class="card">
         <h2>POS</h2>
-        <form class="form" action="/inventory/" method="post">
+        <form class="form" method="POST">
             {% csrf_token %}
             {{ form }}
-            <button type="form-submit" action="">Sign In</button>
+            <button type="form-submit" name="signin">Sign In</button>
         </form> 
     </div>
 {% endblock %}

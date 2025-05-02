@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Employee(models.Model):
-    POSITION_CASHIER = 'C'
-    POSITION_INVENTORY = 'I'
+    POSITION_CASHIER = 'Cshr'
+    POSITION_INVENTORY = 'Invt'
 
     POSITION_CHOICES = [
         (POSITION_CASHIER, 'Cashier'),
@@ -16,4 +16,4 @@ class Employee(models.Model):
     epos = models.CharField(choices=POSITION_CHOICES, default=POSITION_INVENTORY, max_length=16)
 
     def __str__(self):
-        return f'{self.eid} | {self.epos}'
+        return f'Username: {self.eid.username}, Access: {self.epos}'

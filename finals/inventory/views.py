@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Inventory
 from .forms import InventoryForm
 
 # Create your views here.
+
+@login_required
 def inventory(request):
     form = InventoryForm()
     all_inventory = Inventory.objects.all().select_related('pid')
