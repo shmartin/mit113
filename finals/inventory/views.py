@@ -24,7 +24,7 @@ def inventory(request):
             pk = request.POST.get('delete')
             inv = Inventory.objects.get(id=pk)
             inv.delete()
-        elif 'update' in request.POST:
+        elif 'remove' in request.POST:
             pk = request.POST.get('update')
             inv = Inventory.objects.get(id=pk)
             form = InventoryForm(instance=inv)

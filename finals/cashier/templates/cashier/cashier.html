@@ -49,9 +49,8 @@
                         {% for i in orders %}
                             <li class="item">
                                 <span class="name">{{ i.pid.pname }}</span>
-                                <span class="quantity">x 1</span>
                                 <span class="price">{{ i.pid.pprice }}</span>
-                                <button class="remove">X</button>
+                                <button value="{{ i.id }}" name="remove" class="remove">X</button>
                             </li>
                         {% endfor %}
                         </ul>

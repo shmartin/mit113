@@ -35,7 +35,7 @@ def cashier(request):
             request.session['current_sale_id'] = sale.pk
             return redirect('/cashier')
 
-        if 'add' in request.POST:
+        elif 'add' in request.POST:
             pk = request.POST.get('add')
             if newsale:
                 try:
@@ -49,6 +49,11 @@ def cashier(request):
                 print('No Current Sale')
 
             return redirect('/cashier')
+
+        elif 'remove' in request.POST:
+            pk = request.POST.get('remove')
+            order = get_object_or_404(Order, id=pk)
+            order.delete()
 
     context = {}
     context['product'] = all_product

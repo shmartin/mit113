@@ -44,8 +44,8 @@ INSTALLED_APPS = [
 ]
 
 AUTH_PROFILE_MODULE = 'users.Employee'
-LOGIN_REDIRECT_URL = '/login/'
-LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
