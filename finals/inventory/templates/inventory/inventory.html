@@ -22,23 +22,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for field in form %}
-                                <td>{{ field }}</td>
-                            {% endfor %}
-                                <td>· · · · · ‒ · · · ‒ ‒ ·</td>
-                                <td>‒ ‒ ·</td>
-                                <td>
-                                    <button name="add">Add</button>
-                                </td>
-                            {% for i in inventory %}
+                            {% if not form.instance.id %}
+                                <tr>
+                                    {% include 'save.html' %}
+                                    <td>
+                                        <button name="add" value="{{ i.id }}">Add</button>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td>· ‒ ‒ ‒ · · ‒ · ‒ ‒ ·</td>
+                                    <td>‒ ‒ · ‒ · ‒ · ‒ · · ‒ ·</td>
+                                    <td>‒ · · · · ‒ · · · ‒ ‒ · ‒ · · ‒ · · · ‒ ‒ ‒ · ·</td>
+                                    <td>· ‒ ‒ · · · · ‒ ‒ · ·</td>
+                                </tr>
+                            {% endif %}
+                            {% for i in inventory|dictsortreversed:"pdate" %}
                             <tr>
-                                <td>{{ i.pid.pname }}</td>
-                                <td>{{ i.pquantity }}</td>
-                                <td>{{ i.pdate }}</td>
-                                <td>Php {{ i.pid.pprice }}.00</td>
-                                <td>
-                                    <button name="update" value="{{ i.id }}">Update</button>
-                                </td>
+                                {% if form.instance.id == i.id %}
+                                    {% include 'save.html' %}
+                                    <td>
+                                        <button name="add" value="{{ i.id }}">Save</button>
+                                    </td>
+                                {% else %}
+                                    <td>{{ i.pid.pname }}</td>
+                                    <td>{{ i.pquantity }}</td>
+                                    <td>{{ i.pdate }}</td>
+                                    <td>Php {{ i.pid.pprice }}.00</td>
+                                    <td>
+                                        <button formnovalidate name="update" value="{{ i.id }}">Update</button>
+                                        <button formnovalidate name="delete" value="{{ i.id }}">Delete</button>
+                                    </td>
+                                {% endif %}
                             </tr>
                             {% endfor %}
                         </tbody>

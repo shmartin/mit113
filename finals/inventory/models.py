@@ -4,10 +4,10 @@ from django.db import models
 
 class Product(models.Model):
     pname = models.CharField(max_length=64)
-    pprice = models.IntegerField()
+    pprice = models.FloatField()
 
     def __str__(self):
-        return f"{self.pname}"
+        return f'{self.pname}'
 
 class Inventory(models.Model):
     pid = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -15,4 +15,4 @@ class Inventory(models.Model):
     pdate = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.pid.pname} | {self.pdate} | {self.pid.pprice} | {self.pquantity}"
+        return f'{self.pdate} | {self.pquantity}x {self.pid.pname} @ {self.pid.pprice}'

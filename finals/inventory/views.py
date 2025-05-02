@@ -9,9 +9,22 @@ def inventory(request):
 
     if request.method == 'POST':
         if 'add' in request.POST:
-            form = InventoryForm(request.POST)
+            pk = request.POST.get('add')
+            if not pk:
+                form = InventoryForm(request.POST)
+            else:
+                inv = Inventory.objects.get(id=pk)
+                form = InventoryForm(request.POST, instance=inv)
             form.save()
-            return redirect('/inventory')
+            form = InventoryForm()
+        elif 'delete' in request.POST:
+            pk = request.POST.get('delete')
+            inv = Inventory.objects.get(id=pk)
+            inv.delete()
+        elif 'update' in request.POST:
+            pk = request.POST.get('update')
+            inv = Inventory.objects.get(id=pk)
+            form = InventoryForm(instance=inv)
 
     context = {}
     context['inventory'] = all_inventory

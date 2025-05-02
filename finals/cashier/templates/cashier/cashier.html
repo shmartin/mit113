@@ -10,6 +10,7 @@
             <section class="product-list">
                 <h2>Products</h2>
                 <div class="product-grid">
+                    {% csrf_token %}
                     {% for i in product|dictsort:"pname" %}
                         {% if i.pquantity > 0 %}
                             <div class="product-card">
@@ -17,7 +18,7 @@
                                 <h3>{{ i.pname }}</h3>
                                 <h3>{{ i.pquantity }}</h3>
                                 <span class="price">Php {{ i.pprice }}.00</span>
-                                <button value="{{ i.id }}" name="add" class="add-to-cart" action="/cashier">Add</button>
+                                <button value="{{ i.id }}" name="add" class="add-to-cart">Add</button>
                             </div>
                         {% else %}
                             <div class="product-card">
