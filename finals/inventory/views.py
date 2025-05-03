@@ -20,14 +20,17 @@ def inventory(request):
                 form = InventoryForm(request.POST, instance=inv)
             form.save()
             form = InventoryForm()
+            return redirect('/inventory')
         elif 'delete' in request.POST:
             pk = request.POST.get('delete')
             inv = Inventory.objects.get(id=pk)
             inv.delete()
-        elif 'remove' in request.POST:
+            return redirect('/inventory')
+        elif 'update' in request.POST:
             pk = request.POST.get('update')
             inv = Inventory.objects.get(id=pk)
             form = InventoryForm(instance=inv)
+            return redirect('/inventory')
 
     context = {}
     context['inventory'] = all_inventory

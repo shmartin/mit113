@@ -1,9 +1,11 @@
 from datetime import date
-from django.shortcuts import render, redirect, get_object_or_404
-from django.db.models import Sum, F
-from inventory.models import Product
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
+from django.db.models import Sum, F
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Sale, Order
+from inventory.models import Product, Inventory
 
 # Create your views here.
 
@@ -33,27 +35,63 @@ def cashier(request):
         if 'newsale' in request.POST:
             sale = Sale.objects.create()
             request.session['current_sale_id'] = sale.pk
-            return redirect('/cashier')
 
         elif 'add' in request.POST:
             pk = request.POST.get('add')
             if newsale:
                 try:
-                    pname = get_object_or_404(Product, pk=pk)
-                    order = Order.objects.create(pid=pname,tid=newsale)
+                    with transaction.atomic():
+                        pname = get_object_or_404(Product, pk=pk)
+                        order_quantity = 1
+                        remaining = order_quantity
+                        inv = Inventory.objects.filter(pid=pk).order_by('pdate')
+                        total_inv = inv.aggregate(total=Sum('pquantity'))['total'] or 0
+                        if total_inv >= order_quantity:
+                            for item in inv:
+                                if remaining > 0:
+                                    if item.pquantity >= remaining:
+                                        item.pquantity -= remaining
+                                        item.save()
+                                        remaining = 0
+                                    else:
+                                        remaining -= item.pquantity
+                                        item.pquantity = 0
+                                        item.save()
+                            order = Order.objects.create(pid=pname,tid=newsale)
+                        elif total_inv > 0:
+                            pass
+                        else:
+                            pass
                 except Product.DoesNotExist:
-                    print(f'Error: {pk} not found')
+                    messages.error(request, f'Product not found: {pk}')
                 except Exception as e:
-                    print(f'{e}')
+                    messages.error(request, f'Error processing order: {e}')
             else:
                 print('No Current Sale')
 
-            return redirect('/cashier')
-
         elif 'remove' in request.POST:
             pk = request.POST.get('remove')
-            order = get_object_or_404(Order, id=pk)
-            order.delete()
+            try:
+                with transaction.atomic():
+                    delete_order = Order.objects.get(id=pk)
+                    linked_products = delete_order.pid
+                    inventory_update = Inventory.objects.filter(pid=linked_products).order_by('-pdate').first()
+                    if inventory_update:
+                        inventory_update.pquantity += 1
+                        inventory_update.save()
+                    else:
+                        pass
+                    delete_order.delete()
+                messages.success(request, 'Item removed successfully.')
+            except Order.DoesNotExist:
+                messages.error(request, 'Item already removed or not found.')
+            except Exception as e:
+                messages.error(request, f'Error removing order: {e}')
+
+        elif 'complete' in request.POST:
+            pk = request.POST.get('complete')
+
+        return redirect('/cashier')
 
     context = {}
     context['product'] = all_product
