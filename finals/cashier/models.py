@@ -1,29 +1,23 @@
 from django.db import models
-from inventory.models import Product
+from django.contrib.auth.models import User
+from inventory.models import Product, Inventory
 
 # Create your models here.
 
 class Sale(models.Model):
-    sdate = models.DateField(auto_now_add=True)
-    ssub_total = models.FloatField(default=0)
-    sgrand_total = models.FloatField(default=0)
-    stax_amount = models.FloatField(default=0)
-    stax_percentage = models.FloatField(default=0)
-    samount_payed = models.FloatField(default=0)
-    samount_change = models.FloatField(default=0)
+    eid = models.ForeignKey(User, on_delete=models.CASCADE)
+    sdate = models.DateTimeField(auto_now_add=True)
+    stotal = models.FloatField(default=0)
+    spayed = models.FloatField(default=0)
+    schange = models.FloatField(default=0)
 
     def __str__(self):
         return f'{self.id} {self.sdate}'
 
-# order normalize
-# order detail
 class Order(models.Model):
     tid = models.ForeignKey(Sale, on_delete=models.CASCADE)
     pid = models.ForeignKey(Product, on_delete=models.CASCADE)
-    odate = models.DateField(auto_now_add=True)
+    iid = models.ForeignKey(Inventory, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.tid.sdate} {self.pid.pname}'
-
-# order head
-# date, time, reference

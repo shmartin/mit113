@@ -16,3 +16,10 @@ class Inventory(models.Model):
 
     def __str__(self):
         return f'{self.pdate} | {self.pquantity}x {self.pid.pname} @ {self.pid.pprice}'
+
+class Extra(models.Model):
+    exname = models.CharField(max_length=64)
+    exprice = models.FloatField()
+
+    def __str__(self):
+        return f'{self.exname}'
