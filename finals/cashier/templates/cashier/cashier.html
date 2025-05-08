@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="{% static 'css/cashier_styles.css' %}">
 {% endblock %}
 
+
+{% block navigations %}
+    <a href="/cashier">Cashier</a> |
+    <a href="/reports">Reports</a> |
+{% endblock %}
+
 {% block content %}
     <main class="pos-main">
         <aside class="left-panel">
@@ -158,13 +164,6 @@
     </div> {# End payment-modal #}
     {# --- End Modal HTML --- #}
 
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
 
 {% block scripts_extra %}
     <script src="{% static 'js/cashier_scripts.js' %}"></script>

@@ -1,17 +1,28 @@
 from datetime import date
 from decimal import Decimal, InvalidOperation
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import transaction
 from django.db.models import Sum, F
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .models import Sale, Order, SaleExtra
 from inventory.models import Product, Inventory, Extra
+from users.models import Employee
+
+def is_cashier(user):
+    if user.is_authenticated:
+        try:
+            employee = Employee.objects.get(eid=user)
+            return employee.epos == Employee.POSITION_CASHIER
+        except Employee.DoesNotExist:
+            return False
+    return False
 
 # Create your views here.
 
 @login_required
+@user_passes_test(is_cashier, login_url='/')
 def cashier(request):
     all_product = Product.objects.annotate(pquantity=Sum('inventory__pquantity'))
     extras = Extra.objects.all()

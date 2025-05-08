@@ -6,16 +6,25 @@ from django.utils import timezone
 from decimal import Decimal, InvalidOperation
 from django.contrib import messages
 from django.db import transaction
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models.functions import TruncDate
 from cashier.models import Order, Sale, SaleExtra
 from inventory.models import Product, Inventory, Extra
+from users.models import Employee
 
+def is_cashier(user):
+    if user.is_authenticated:
+        try:
+            employee = Employee.objects.get(eid=user)
+            return employee.epos == Employee.POSITION_CASHIER
+        except Employee.DoesNotExist:
+            return False
+    return False
 
 # Create your views here.
-# ... (your existing cashier view function) ...
 
 @login_required
+@user_passes_test(is_cashier, login_url='/')
 def reports(request):
     completed_sales_queryset = Sale.objects.filter(is_completed=True)
 

@@ -1,12 +1,23 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Inventory
 from .forms import InventoryForm
 import logging
+from users.models import Employee
+
+def is_inventory(user):
+    if user.is_authenticated:
+        try:
+            employee = Employee.objects.get(eid=user)
+            return employee.epos == Employee.POSITION_INVENTORY
+        except Employe.DoesNotExist:
+            return False
+    return False
 
 # Create your views here.
 
 @login_required
+@user_passes_test(is_inventory, login_url='/')
 def inventory(request):
     form = InventoryForm()
     all_inventory = Inventory.objects.all().select_related('pid')

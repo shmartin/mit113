@@ -1,0 +1,137 @@
+/* Basic styling for the login page layout */
+body {
+    font-family: 'Arial', sans-serif; /* Use a common font */
+    background-color: #f4f4f4; /* Light gray background */
+    display: flex; /* Use flexbox to center content */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    min-height: 100vh; /* Minimum height of the viewport */
+    margin: 0; /* Remove default body margin */
+    padding: 20px; /* Add some padding around content on small screens */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+.login-container {
+    width: 50%; /* Take full width */
+    max-width: 400px; /* Limit the maximum width of the login card */
+    /* The flexbox on body handles centering, so no need for margin: auto here */
+}
+
+
+/* Card Styling */
+.card.login-card { /* Use the combined class for specificity */
+    overflow: hidden;
+    position: relative;
+    z-index: 3;
+    width: 100%; /* Card takes full width of its container (.login-container) */
+    padding: 30px; /* Adjusted padding */
+    border-radius: 1.25rem;
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+}
+
+.login-card > h2 {
+    font-size: 2.5rem; /* Adjusted font size */
+    font-weight: 600; /* Slightly bolder */
+    margin: 0 0 2rem; /* Adjusted bottom margin */
+    color: #333; /* Darker text color */
+}
+
+/* Form Styling */
+.login-form {
+    margin: 0; /* Remove margin from the form itself */
+    display: grid;
+    gap: 15px; /* Increased gap between form groups */
+}
+
+.form-group {
+    text-align: left; /* Align labels and inputs to the left */
+}
+
+.form-group label {
+    display: block; /* Make labels block elements */
+    margin-bottom: 8px; /* Space below labels */
+    font-weight: bold;
+    color: #555;
+    font-size: 0.9em;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] { /* Target specific input types */
+    width: 100%; /* Take full width of form-group */
+    padding: 12px 15px; /* Adjusted padding */
+    border: 1px solid #ccc; /* Softer border */
+    border-radius: 5px; /* Slightly less rounded corners */
+    font-size: 1rem;
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+    transition: border-color 0.3s ease;
+}
+
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus {
+    outline: none; /* Remove default outline */
+    border-color: #007bff; /* Highlight border on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2); /* Add a subtle shadow on focus */
+}
+
+/* Button Styling */
+.login-button { /* Use the specific button class */
+    width: 100%;
+    height: 50px;
+    background-color: #007bff; /* Blue background */
+    color: white;
+    border: none; /* Remove border */
+    border-radius: 5px; /* Match input border-radius */
+    font-size: 1.1em; /* Adjusted font size */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Space above the button */
+}
+
+.login-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Error Message Styling */
+.form-errors {
+    color: #dc3545; /* Red color for errors */
+    margin-bottom: 15px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.form-errors p {
+    margin: 5px 0;
+}
+
+.field-errors {
+    color: #dc3545; /* Red color for errors */
+    font-size: 0.8em;
+    margin-top: 5px;
+    padding-left: 20px; /* Indent error list */
+    list-style: disc; /* Use bullet points */
+}
+
+.field-errors li {
+    margin-bottom: 3px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 20px; /* Reduce padding on smaller screens */
+    }
+
+    .login-card > h2 {
+        font-size: 2rem; /* Reduce heading size */
+        margin-bottom: 1.5rem;
+    }
+
+    .login-form input[type="text"],
+    .login-form input[type="password"],
+    .login-button {
+        font-size: 1em; /* Reduce font size */
+        padding: 10px 15px;
+    }
+}
