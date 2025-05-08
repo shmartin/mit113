@@ -138,6 +138,7 @@ def cashier(request):
                     with transaction.atomic():
                         newsale.spayed = float(amount_tendered)
                         newsale.schange = float(change)
+                        newsale.is_completed = True
                         newsale.save()
 
                         empty_inventories = Inventory.objects.filter(pquantity__lte=0)

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'cashier',
     'inventory',
     'users',
+    'reports',
 ]
 
 AUTH_PROFILE_MODULE = 'users.Employee'

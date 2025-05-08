@@ -61,7 +61,7 @@
                 <div class="transaction-area">
                     <h2>Orders</h2>
                     <ul class="transaction-items">
-                        <li class="item" style="font-weight: bold;">Orders</li>
+                        <li class="item" style="font-weight: bold;">Meals</li>
                         {% for i in orders|dictsort:"pid.pname" %}
                             <li class="item">
                                 <span class="name">M{{ forloop.counter }} | {{ i.pid.pname }}</span>

@@ -10,6 +10,7 @@ class Sale(models.Model):
     stotal = models.FloatField(default=0)
     spayed = models.FloatField(default=0)
     schange = models.FloatField(default=0)
+    is_completed = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.id} {self.sdate}'

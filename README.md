@@ -60,4 +60,4 @@ The database will have to store daily transactions and inventory changes.
     - [ ] Add product to orders list on clicked card in products section in cashier page
 - [ ] User authentication
     - [ ] Password protected pages
-- [ ] Fix dynamic UI
+- [X] Fix dynamic UI

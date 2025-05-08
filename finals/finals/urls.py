@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('users.urls')),
     path('', include('cashier.urls')),
     path('', include('inventory.urls')),
+    path('', include('reports.urls')),
 ]
