@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from inventory.models import Product, Inventory
+from inventory.models import Product, Inventory, Extra
 
 # Create your models here.
 
@@ -20,4 +20,11 @@ class Order(models.Model):
     iid = models.ForeignKey(Inventory, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.tid.sdate} {self.pid.pname}'
+        return f'{self.tid} {self.pid.pname}'
+
+class SaleExtra(models.Model):
+    tid = models.ForeignKey(Sale, on_delete=models.CASCADE)
+    exid = models.ForeignKey(Extra, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.tid} | {self.exid.exname} | {self.exid.exprice}'

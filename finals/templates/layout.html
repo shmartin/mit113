@@ -11,6 +11,10 @@
         | POS
     </title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block head_extra %}
+    {% endblock %}
+    {% block script_extra %}
+    {% endblock %}
 </head>
 <body>
     <nav>

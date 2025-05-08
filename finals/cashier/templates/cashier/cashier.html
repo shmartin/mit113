@@ -1,13 +1,18 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block title %}
     Cashier
 {% endblock %}
 
+{% block head_extra %}
+    <link rel="stylesheet" href="{% static 'css/cashier_styles.css' %}">
+{% endblock %}
+
 {% block content %}
     <main class="pos-main">
         <aside class="left-panel">
-            <section class="product-list">
+            <section class="product-list meals-list">
                 <h2>Meals</h2>
                 <form method="POST">
                     {% csrf_token %}
@@ -15,25 +20,25 @@
                         {% for i in product|dictsort:"pname" %}
                             {% if i.pquantity > 0 %}
                                 <div class="product-card">
-                                    <img src="../../static/images/{{ i.pname }}.jpeg" alt=" ">
+                                    <img src="{% static 'images/' %}{{ i.pname }}.jpeg" alt=" ">
                                     <h3>{{ i.pname }}</h3>
-                                    <h3>{{ i.pquantity }}</h3>
-                                    <span class="price">Php {{ i.pprice }}</span>
+                                    <h3>In Stock: {{ i.pquantity }}</h3>
+                                    <span class="price">₱{{ i.pprice|floatformat:2 }}</span>
                                     <button value="{{ i.id }}" name="add" class="add-to-cart">Add</button>
                                 </div>
                             {% else %}
                                 <div class="product-card">
-                                    <img src="../../static/images/{{ i.pname }}_gray.jpeg" alt=" ">
+                                    <img src="{% static 'images/' %}{{ i.pname }}_gray.jpeg" alt=" ">
                                     <h3>{{ i.pname }}</h3>
-                                    <h3>Out of Stock</h3>
-                                    <span class="price">Php {{ i.pprice }}</span>
+                                    <h3 style="color: red; font-weight: bold;">Out of Stock</h3>
+                                    <span class="price">₱{{ i.pprice|floatformat:2 }}</span>
                                 </div>
                             {% endif %}
                         {% endfor %}
                     </div>
                 </form>
             </section>
-            <section class="product-list">
+            <section class="product-list extras-list">
                 <h2>Extras</h2>
                 <form method="POST">
                     {% csrf_token %}
@@ -41,7 +46,7 @@
                         {% for i in extras|dictsort:"exname" %}
                             <div class="product-card">
                                 <h3>{{ i.exname }}</h3>
-                                <span class="price">Php {{ i.exprice }}</span>
+                                <span class="price">₱{{ i.exprice|floatformat:2 }}</span>
                                 <button value="{{ i.id }}" name="add_extra" class="add-to-cart">Add</button>
                             </div>
                         {% endfor %}
@@ -49,52 +54,152 @@
                 </form>
             </section>
         </aside>
+
         <section class="right-panel">
             <form method="POST">
                 {% csrf_token %}
                 <div class="transaction-area">
                     <h2>Orders</h2>
                     <ul class="transaction-items">
-                        {% for i in orders %}
+                        <li class="item" style="font-weight: bold;">Orders</li>
+                        {% for i in orders|dictsort:"pid.pname" %}
                             <li class="item">
-                                <span class="name">{{ i.pid.pname }}</span>
-                                <span class="price">{{ i.pid.pprice }}</span>
+                                <span class="name">M{{ forloop.counter }} | {{ i.pid.pname }}</span>
+                                <span class="price">₱{{ i.pid.pprice|floatformat:2 }}</span>
                                 <button value="{{ i.id }}" name="remove" class="remove">X</button>
                             </li>
+                        {% empty %}
+                            {% if orders|length == 0 %}
+                                <li class="item">No orders added yet.</li>
+                            {% endif %}
+                        {% endfor %}
+                        <li class="item" style="font-weight: bold;">Extras</li>
+                        {% for i in saleextra|dictsort:"exid.exname" %}
+                            <li class="item">
+                                <span class="name">E{{ forloop.counter }} | {{ i.exid.exname }}</span>
+                                <span class="price">₱{{ i.exid.exprice|floatformat:2 }}</span>
+                                <button value="{{ i.id }}" name="remove_extra" class="remove">X</button>
+                            </li>
+                        {% empty %}
+                            {% if saleextra|length == 0 %}
+                                <li class="item">No extras added yet.</li>
+                            {% endif %}
                         {% endfor %}
                         </ul>
+
                     <div class="transaction-summary">
                         <div class="summary-row total">
                             <span>Total:</span>
-                            <span class="amount">{{ total }}</span>
+                            <span class="amount" id="sale-grand-total">{{ grandtotal|floatformat:2 }}</span>
                         </div>
                     </div>
                 </div>
-            </form>
-            <div class="payment-area">
-                <h2>Payment</h2>
-                <div class="payment-input">
-                    <label for="amount-tendered">Change:</label>
-                    <label for="amount-tendered">{{ change }}</label>
-                    <label for="amount-tendered">Amount Tendered:</label>
-                    <input type="number" id="amount-tendered">
-                    <div class="keypad">
-                        <button value="7" class="key">7</button>
-                        <button value="8" class="key">8</button>
-                        <button value="9" class="key">9</button>
-                        <button value="4" class="key">4</button>
-                        <button value="5" class="key">5</button>
-                        <button value="6" class="key">6</button>
-                        <button value="1" class="key">1</button>
-                        <button value="2" class="key">2</button>
-                        <button value="3" class="key">3</button>
-                        <button class="key clear">C</button>
-                        <button value="0" class="key">0</button>
-                        <button class="key backspace">&larr;</button>
-                    </div>
-                    <button class="complete-sale">Complete Sale</button>
+                <div class="payment-button-container">
+                    <button type="button" id="open-payment-modal" class="payment-button">Payment</button>
                 </div>
-            </div>
+            </form>
+
         </section>
     </main>
+    
+<!-- modal part -->
+<div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Complete Sale</h2>
+            <form method="POST" id="complete-sale-form-modal">
+                 {% csrf_token %}
+                 <div class="payment-details">
+                     <p>Total: <span id="modal-grand-total">{{ grandtotal|floatformat:2|default:"0.00" }}</span></p>
+                     <p>Change: <span id="modal-calculated-change">{{ change|floatformat:2|default:"0.00" }}</span></p>
+
+                     <label for="modal-amount-tendered">Amount Tendered:</label>
+                     <input type="number" id="modal-amount-tendered" name="amount_tendered" step="0.01">
+
+                     {# --- Peso Denomination Keypad --- #}
+                     <div class="keypad">
+                         <button type="button" value="1000" class="key">₱1000</button>
+                         <button type="button" value="500" class="key">₱500</button>
+                         <button type="button" value="200" class="key">₱200</button>
+                         <button type="button" value="100" class="key">₱100</button>
+                         <button type="button" value="50" class="key">₱50</button>
+                         <button type="button" value="20" class="key">₱20</button>
+                         <button type="button" value="10" class="key">₱10</button>
+                         <button type="button" value="5" class="key">₱5</button>
+                         <button type="button" value="1" class="key">₱1</button>
+                         <button type="button" value="0.50" class="key">₱0.50</button>
+                         <button type="button" value="0.25" class="key">₱0.25</button>
+                         {# Keep Clear and Backspace if desired #}
+                         <button type="button" class="key clear">C</button>
+                         <button type="button" class="key backspace">&larr;</button>
+                         {# Optional: Add an Exact button if common #}
+                         {# <button type="button" class="key exact">Exact</button> #}
+                     </div> {# End keypad #}
+                     {# --- End Peso Denomination Keypad --- #}
+
+                     {# Buttons for the two-step process (if used) or just the submit button #}
+                     {# You'll need to decide if you want "Confirm Payment" -> "Complete Sale" or just "Complete Sale" #}
+                     {# If just "Complete Sale", remove the confirm button and style the complete button #}
+                     {% comment %}
+                     <button type="button" id="confirm-payment-button" class="payment-action-button">Confirm Payment</button>
+                     <button type="submit" name="complete_sale" id="complete-sale-button" class="payment-action-button" style="display: none;">Complete Sale</button>
+                     {% endcomment %}
+
+                     {# If only one button is needed to trigger the final submission #}
+                      <button type="submit" name="complete_sale" id="complete-sale-button" class="payment-action-button complete-sale-button">Complete Sale</button>
+
+
+                     {# Area to display messages in the modal #}
+                     <div id="payment-modal-message" style="color: red; margin-top: 10px;"></div>
+
+                 </div> {# End payment-details #}
+            </form> {# End form inside modal #}
+        </div> {# End modal-content #}
+    </div> {# End payment-modal #}
+    {# --- End Modal HTML --- #}
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% block scripts_extra %}
+    <script src="{% static 'js/cashier_scripts.js' %}"></script>
 {% endblock %}
+
+{% endblock %}
+
+
+
+
+<!--
+    
+    <div class="payment-area">
+        <h2>Payment</h2>
+        <div class="payment-input">
+            <label for="amount-tendered">Change:</label>
+            <label for="amount-tendered">{{ change }}</label>
+            <label for="amount-tendered">Amount Tendered:</label>
+            <input type="number" id="amount-tendered" name="amount_tendered">
+            <div class="keypad">
+                <button value="7" class="key">7</button>
+                <button value="8" class="key">8</button>
+                <button value="9" class="key">9</button>
+                <button value="4" class="key">4</button>
+                <button value="5" class="key">5</button>
+                <button value="6" class="key">6</button>
+                <button value="1" class="key">1</button>
+                <button value="2" class="key">2</button>
+                <button value="3" class="key">3</button>
+                <button class="key clear">C</button>
+                <button value="0" class="key">0</button>
+                <button class="key backspace">&larr;</button>
+            </div>
+            <button name="complete_sale" class="complete-sale">Complete Sale</button>
+        </div>
+    </div>
+
+-->

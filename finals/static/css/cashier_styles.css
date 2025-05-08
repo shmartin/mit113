@@ -1,0 +1,388 @@
+/* Basic page setup to prevent overall scrolling */
+html, body {
+    height: 100%; /* Make html and body take up the full viewport height */
+    margin: 0;    /* Remove default margin */
+    padding: 0;   /* Remove default padding */
+    overflow: hidden; /* Prevent scrolling on the html/body */
+    /* Add other global styles like font, background here */
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex; /* Use flexbox on body if it's your main layout container */
+    flex-direction: column; /* Stack children vertically */
+}
+
+/* Ensure the layout wrapper takes available height */
+.pos-main {
+    display: flex;
+    flex-grow: 1; /* Allow pos-main to fill the remaining vertical space */
+    padding: 20px;
+    gap: 20px;
+    min-height: 0; /* Allow flex item to shrink */
+    overflow: hidden; /* Crucial to contain flex children */
+}
+
+.left-panel {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 0; /* Allow flex item to shrink */
+    overflow: hidden; /* Hide overflow unless sections make it scroll */
+}
+
+.right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    gap: 20px;
+    min-height: 0; /* Allow flex item to shrink */
+    overflow: hidden; /* Crucial to contain its children's overflow */
+}
+
+/* Left Panel Sections */
+.left-panel .product-list {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* Allow flex item to shrink */
+    overflow: hidden; /* Hide overflow unless .product-grid makes it scroll */
+}
+
+
+.left-panel .product-list h2 {
+    flex-shrink: 0;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* Styles for the Meals section - Make it fill remaining space */
+.left-panel .product-list:first-child { /* Targets the first .product-list (Meals) */
+    flex-grow: 1; /* Allows this section to take up remaining vertical space */
+}
+
+
+/* Styles for the Extras section - Anchor to bottom */
+.left-panel .product-list:last-child { /* Targets the last .product-list (Extras) */
+    flex-shrink: 0;
+    /* Optional: set a fixed height or max-height if you don't want it to grow */
+    /* max-height: 200px; */
+}
+
+
+/* Product Grid inside sections - Make this scrollable */
+.product-list .product-grid {
+    max-height: none; /* Override any previous max-height */
+    overflow-y: auto; /* Add vertical scrollbar when content overflows */
+    flex-grow: 1; /* Allow the grid to take up available space within its section */
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+/* Right Panel - Transaction Area and Payment Button */
+.transaction-area {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column; /* Stack header, list, and summary vertically */
+    flex-grow: 1; /* Allow transaction area to fill space in right panel above the button */
+    min-height: 0; /* Allow flex item to shrink */
+    overflow: hidden; /* Crucial to contain children's overflow */
+}
+
+.transaction-area h2 {
+    flex-shrink: 0;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* The actual scrollable list of items */
+.transaction-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: none; /* REMOVE the fixed max-height */
+
+    flex-grow: 1; /* Allow the list to grow and take available space within transaction-area */
+    overflow-y: auto; /* THIS IS WHERE THE SCROLLBAR APPEARS */
+    padding-right: 15px; /* Add some padding for the scrollbar */
+}
+
+.transaction-items .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.transaction-items .item:last-child {
+    border-bottom: none;
+}
+
+.transaction-items .item .name {
+    flex-grow: 1;
+}
+
+.transaction-items .item .quantity {
+    margin-left: 10px;
+    color: #777;
+}
+
+.transaction-items .item .price {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.transaction-items .item .remove {
+    background: none;
+    color: #dc3545;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    margin-left: 10px;
+}
+
+.transaction-summary {
+    flex-shrink: 0;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 2px solid #eee;
+}
+
+.transaction-summary .summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.transaction-summary .total {
+    font-weight: bold;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+/* The container for the Payment button - Ensure this is a direct child of .right-panel */
+.payment-button-container {
+    flex-shrink: 0;
+    background-color: white; /* Match other sections */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-top: 20px; /* Space between transaction area and button */
+}
+
+.payment-button { /* Style your new Payment button */
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 1.5em;
+    background-color: #007bff; /* Blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.payment-button:hover {
+    background-color: #0056b3;
+}
+
+
+/* --- Basic Modal Styles --- */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top (higher than other content) */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed within modal */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    /* padding-top: 60px; Remove or adjust this if it affects centering */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* Adjust vertical margin to center it better */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more responsive */
+    max-width: 400px; /* Smaller max width might be better for a calculator */
+    position: relative;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Styles for elements inside the modal payment form */
+#payment-modal .payment-details p {
+margin-bottom: 10px;
+font-size: 1.1em;
+}
+
+#payment-modal .payment-details label {
+display: block;
+margin-bottom: 5px;
+}
+
+#modal-amount-tendered { /* Style the amount input in modal */
+width: calc(100% - 22px); /* Adjust width considering padding/border */
+padding: 10px;
+font-size: 1.5em;
+margin-bottom: 10px;
+border: 1px solid #ccc;
+border-radius: 4px;
+box-sizing: border-box;
+}
+
+#payment-modal .keypad { /* Style the keypad in modal */
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 10px;
+background-color: #e0e0e0;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#payment-modal .keypad button { /* Style keypad buttons in modal */
+padding: 15px;
+font-size: 1.2em;
+text-align: center;
+border: 1px solid #ccc;
+border-radius: 5px;
+background-color: #f9f9f9;
+cursor: pointer;
+transition: background-color 0.2s ease;
+}
+
+#payment-modal .keypad button:hover {
+background-color: #eee;
+}
+#payment-modal .keypad .clear { background-color: #ff6b6b; color: white; }
+#payment-modal .keypad .clear:hover { background-color: #e05858; }
+#payment-modal .keypad .backspace { font-size: 1.5em; }
+
+
+.complete-sale-button { /* Style the complete sale button in modal */
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 1.5em;
+    margin-top: 20px;
+    background-color: #28a745; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.complete-sale-button:hover {
+    background-color: #1e7e34;
+}
+
+
+/* --- Responsive Design --- */
+
+/* Stack panels vertically on smaller screens */
+@media (max-width: 768px) { /* Example breakpoint for tablets/larger phones */
+    .pos-main {
+        flex-direction: column; /* Stack left and right panels */
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .left-panel, .right-panel {
+        flex: none; /* Remove flex grow/shrink */
+        width: 100%; /* Take full width */
+        max-height: 50vh; /* Limit height of panels to prevent excessive scrolling */
+        overflow-y: auto; /* Make the panel itself scrollable */
+    }
+
+    /* Adjust scrollable areas inside panels */
+    .left-panel .product-list {
+        flex-grow: 0; /* Prevent growth when stacked vertically */
+        max-height: none; /* Let the panel handle scroll */
+        overflow: hidden; /* Hide overflow unless inner grid makes it scroll (less likely now) */
+    }
+
+    .left-panel .product-list .product-grid {
+        max-height: none; /* Let the section handle scroll */
+        overflow-y: visible; /* Prevent inner scrollbar */
+    }
+
+    .right-panel {
+        max-height: 50vh; /* Limit height */
+        overflow-y: auto; /* Make the panel itself scrollable */
+    }
+
+    .transaction-area {
+        height: auto; /* Auto height */
+        flex-grow: 0; /* Prevent growth */
+        max-height: none; /* Let the panel handle scroll */
+        overflow: hidden; /* Hide overflow unless inner list makes it scroll */
+    }
+
+    .transaction-items {
+        max-height: none; /* Let the transaction area handle scroll */
+        overflow-y: visible; /* Prevent inner scrollbar */
+    }
+
+
+    .product-list .product-grid {
+        grid-template-columns: repeat(2, minmax(100px, 1fr)); /* 2 columns on smaller screens */
+        gap: 10px;
+    }
+
+    .product-list .product-card img {
+        height: 15vh; /* Adjust image height */
+    }
+
+    .modal-content {
+        width: 95%; /* Wider modal on small screens */
+        margin: 10% auto; /* Adjust margin */
+    }
+}
+
+@media (max-width: 480px) { /* Example breakpoint for very small phones */
+    .product-list .product-grid {
+        grid-template-columns: repeat(1, minmax(100px, 1fr)); /* 1 column on very small screens */
+    }
+    #payment-modal .keypad {
+    gap: 5px; /* Smaller gap */
+    }
+    #payment-modal .keypad button {
+    padding: 10px; /* Smaller padding */
+    }
+}
