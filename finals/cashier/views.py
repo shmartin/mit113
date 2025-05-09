@@ -143,7 +143,7 @@ def cashier(request):
                 amount_tendered = Decimal(amount_tendered_str)
                 grand_total = Decimal(newsale.stotal)
 
-                if amount_tendered >= grand_total:
+                if amount_tendered >= grand_total and grand_total != 0:
                     change = amount_tendered - grand_total
 
                     with transaction.atomic():
@@ -157,7 +157,7 @@ def cashier(request):
 
                         del request.session['newsale_id']
                 else:
-                    messages.error(request, f'Tendered insufficient')
+                    messages.error(request, f'Tendered insufficient or no order to complete')
 
             except InvalidOperation:
                 messages.error(request, 'Invalid amount tendered')

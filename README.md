@@ -15,8 +15,8 @@ The website should be able to:
 The possible user of the website are the following:
 
 - Owner
-- Manager
 - Cashier
+- Manager(administrator)
 
 The website design should also be considered for easy navigation and usage.
 
@@ -52,12 +52,3 @@ Logging in with an authenticated user is required to use all other functions of 
 ### Database design
 
 The database will have to store daily transactions and inventory changes. 
-
-### TODO
-
-- [ ] Page auto refresh on database update -- htmx integration
-    - [ ] Refresh orders list in cashier page
-    - [ ] Add product to orders list on clicked card in products section in cashier page
-- [ ] User authentication
-    - [ ] Password protected pages
-- [X] Fix dynamic UI

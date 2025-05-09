@@ -1,101 +1,99 @@
-/* Basic styling for the login page layout */
 body {
-    font-family: 'Arial', sans-serif; /* Use a common font */
-    background-color: #f4f4f4; /* Light gray background */
-    display: flex; /* Use flexbox to center content */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    min-height: 100vh; /* Minimum height of the viewport */
-    margin: 0; /* Remove default body margin */
-    padding: 20px; /* Add some padding around content on small screens */
-    box-sizing: border-box; /* Include padding in element's total width and height */
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .login-container {
-    width: 50%; /* Take full width */
-    max-width: 400px; /* Limit the maximum width of the login card */
-    /* The flexbox on body handles centering, so no need for margin: auto here */
+    width: 50%;
+    max-width: 400px;
 }
 
 
 /* Card Styling */
-.card.login-card { /* Use the combined class for specificity */
+.card.login-card {
     overflow: hidden;
     position: relative;
     z-index: 3;
-    width: 100%; /* Card takes full width of its container (.login-container) */
-    padding: 30px; /* Adjusted padding */
+    width: 100%;
+    padding: 30px;
     border-radius: 1.25rem;
     background: #fff;
     text-align: center;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .login-card > h2 {
-    font-size: 2.5rem; /* Adjusted font size */
-    font-weight: 600; /* Slightly bolder */
-    margin: 0 0 2rem; /* Adjusted bottom margin */
-    color: #333; /* Darker text color */
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 0 0 2rem;
+    color: #333;
 }
 
 /* Form Styling */
 .login-form {
-    margin: 0; /* Remove margin from the form itself */
+    margin: 0;
     display: grid;
-    gap: 15px; /* Increased gap between form groups */
+    gap: 15px;
 }
 
 .form-group {
-    text-align: left; /* Align labels and inputs to the left */
+    text-align: left;
 }
 
 .form-group label {
-    display: block; /* Make labels block elements */
-    margin-bottom: 8px; /* Space below labels */
+    display: block;
+    margin-bottom: 8px;
     font-weight: bold;
     color: #555;
     font-size: 0.9em;
 }
 
 .login-form input[type="text"],
-.login-form input[type="password"] { /* Target specific input types */
-    width: 100%; /* Take full width of form-group */
-    padding: 12px 15px; /* Adjusted padding */
-    border: 1px solid #ccc; /* Softer border */
-    border-radius: 5px; /* Slightly less rounded corners */
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     font-size: 1rem;
-    box-sizing: border-box; /* Include padding and border in the element's total width */
+    box-sizing: border-box;
     transition: border-color 0.3s ease;
 }
 
 .login-form input[type="text"]:focus,
 .login-form input[type="password"]:focus {
-    outline: none; /* Remove default outline */
-    border-color: #007bff; /* Highlight border on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2); /* Add a subtle shadow on focus */
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
 }
 
 /* Button Styling */
-.login-button { /* Use the specific button class */
+.login-button {
     width: 100%;
     height: 50px;
-    background-color: #007bff; /* Blue background */
+    background-color: #007bff;
     color: white;
-    border: none; /* Remove border */
-    border-radius: 5px; /* Match input border-radius */
-    font-size: 1.1em; /* Adjusted font size */
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 10px; /* Space above the button */
+    margin-top: 10px;
 }
 
 .login-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3;
 }
 
 /* Error Message Styling */
 .form-errors {
-    color: #dc3545; /* Red color for errors */
+    color: #dc3545;
     margin-bottom: 15px;
     text-align: left;
     font-weight: bold;
@@ -106,32 +104,31 @@ body {
 }
 
 .field-errors {
-    color: #dc3545; /* Red color for errors */
+    color: #dc3545;
     font-size: 0.8em;
     margin-top: 5px;
-    padding-left: 20px; /* Indent error list */
-    list-style: disc; /* Use bullet points */
+    padding-left: 20px;
+    list-style: disc;
 }
 
 .field-errors li {
     margin-bottom: 3px;
 }
 
-/* Responsive adjustments */
 @media (max-width: 480px) {
     .login-card {
-        padding: 20px; /* Reduce padding on smaller screens */
+        padding: 20px;
     }
 
     .login-card > h2 {
-        font-size: 2rem; /* Reduce heading size */
+        font-size: 2rem;
         margin-bottom: 1.5rem;
     }
 
     .login-form input[type="text"],
     .login-form input[type="password"],
     .login-button {
-        font-size: 1em; /* Reduce font size */
+        font-size: 1em;
         padding: 10px 15px;
     }
 }

@@ -6,91 +6,134 @@
 {% endblock %}
 
 {% block navigations %}
-    <a href="/cashier">Cashier</a> |
-    <a href="/reports">Reports</a> |
+<a href="/cashier">Cashier</a> |
+<a href="/reports">Reports</a> |
 {% endblock %}
 
 {% block content %}
-    <div class="reports-container">
-        <h1>Sales Reports</h1>
+<div class="reports-container">
+    <div class="report-filters">
+        <h2>Filter Sales by Date</h2>
+        <form method="GET">
+            {% csrf_token %}
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" value="{{ start_date|date:'Y-m-d' }}">
 
-        <div class="report-filters">
-            <h2>Filter Sales by Date</h2>
-            <form method="GET">
-                {% csrf_token %}
-                <label for="start_date">Start Date:</label>
-                <input type="date" id="start_date" name="start_date" value="{{ start_date|date:'Y-m-d' }}">
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" value="{{ end_date|date:'Y-m-d' }}">
 
-                <label for="end_date">End Date:</label>
-                <input type="date" id="end_date" name="end_date" value="{{ end_date|date:'Y-m-d' }}">
+            <button type="submit">Apply Filter</button>
+            {% if start_date or end_date %}
+            <a href="/reports/">Clear Filters</a>
+            {% endif %}
+        </form>
+    </div>
 
-                <button type="submit">Apply Filter</button>
-                {% if start_date or end_date %}
-                    <a href="{% url 'reports_page' %}">Clear Filters</a>
-                {% endif %}
-            </form>
-        </div>
+    <div class="report-summary">
+        <h2>Summary</h2>
+        <p style="font-size: 2rem;">Total Revenue from Completed Sales: <strong style="font-size: 2rem;">Php {{ total_revenue|floatformat:2 }}</strong></p>
+    </div>
 
-        <div class="report-summary">
-            <h2>Summary</h2>
-            <p>Total Revenue from Completed Sales: <strong>Php {{ total_revenue|floatformat:2 }}</strong></p>
-        </div>
-
+    <div class="levels-list">
         <div class="inventory-list">
             <h2>Current Inventory Levels</h2>
             {% if inventory_summary %}
-                <table>
-                    <thead>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Remaining Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in inventory_summary %}
                         <tr>
-                            <th>Product Name</th>
-                            <th>Remaining Quantity</th>
+                            <td>{{ i.pname }}</td>
+                            <td>{{ i.total_remaining_quantity|default:0 }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {% for product in inventory_summary %}
-                            <tr>
-                                <td>{{ product.pname }}</td>
-                                <td>{{ product.total_remaining_quantity|default:0 }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                    {% endfor %}
+                </tbody>
+            </table>
             {% else %}
-                <p>No products found in inventory.</p>
+            <p>No products found in inventory.</p>
             {% endif %}
         </div>
-
-        <div class="sales-list">
-            <h2>Completed Sales</h2>
-            {% if completed_sales %}
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Sale ID</th>
-                            <th>Date</th>
-                            <th>Cashier</th>
-                            <th>Total</th>
-                            <th>Paid</th>
-                            <th>Change</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for sale in completed_sales %}
-                            <tr>
-                                <td>{{ sale.id }}</td>
-                                <td>{{ sale.sdate|date:"Y-m-d H:i" }}</td>
-                                <td>{{ sale.eid.username }}</td>
-                                <td>Php {{ sale.stotal|floatformat:2 }}</td>
-                                <td>Php {{ sale.spayed|floatformat:2 }}</td>
-                                <td>Php {{ sale.schange|floatformat:2 }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+        <div class="ordered-quantities-list">
+            <h2>Total Orders Sold</h2>
+            {% if total_product_orders %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Meals</th>
+                        <th>Quantity Sold</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in total_product_orders %}
+                    <tr>
+                        <td>{{ i.pid__pname }}</td>
+                        <td>{{ i.total_ordered_quantity|default:0 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
             {% else %}
-                <p>No completed sales found{% if start_date or end_date %} for the selected date range{% endif %}.</p>
+            <p>No Orders Found.</p>
+            {% endif %}
+            {% if total_extra_orders %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Extra</th>
+                        <th>Quantity Sold</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in total_extra_orders %}
+                    <tr>
+                        <td>{{ i.exid__exname }}</td>
+                        <td>{{ i.total_ordered_quantity|default:0 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No Extra Orders Found.</p>
             {% endif %}
         </div>
     </div>
+
+    <div class="sales-list">
+        <h2>Completed Sales</h2>
+        {% if completed_sales %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Sale ID</th>
+                    <th>Date</th>
+                    <th>Cashier</th>
+                    <th>Total</th>
+                    <th>Paid</th>
+                    <th>Change</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sale in completed_sales %}
+                <tr>
+                    <td>{{ sale.id }}</td>
+                    <td>{{ sale.sdate|date:"Y-m-d H:i" }}</td>
+                    <td>{{ sale.eid.username }}</td>
+                    <td>Php {{ sale.stotal|floatformat:2 }}</td>
+                    <td>Php {{ sale.spayed|floatformat:2 }}</td>
+                    <td>Php {{ sale.schange|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No completed sales found{% if start_date or end_date %} for the selected date range{% endif %}.</p>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}

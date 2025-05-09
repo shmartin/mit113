@@ -122,7 +122,6 @@
                      <label for="modal-amount-tendered">Amount Tendered:</label>
                      <input type="number" id="modal-amount-tendered" name="amount_tendered" step="0.01">
 
-                     {# --- Peso Denomination Keypad --- #}
                      <div class="keypad">
                          <button type="button" value="1000" class="key">₱1000</button>
                          <button type="button" value="500" class="key">₱500</button>
@@ -135,34 +134,19 @@
                          <button type="button" value="1" class="key">₱1</button>
                          <button type="button" value="0.50" class="key">₱0.50</button>
                          <button type="button" value="0.25" class="key">₱0.25</button>
-                         {# Keep Clear and Backspace if desired #}
                          <button type="button" class="key clear">C</button>
                          <button type="button" class="key backspace">&larr;</button>
-                         {# Optional: Add an Exact button if common #}
-                         {# <button type="button" class="key exact">Exact</button> #}
-                     </div> {# End keypad #}
-                     {# --- End Peso Denomination Keypad --- #}
+                     </div>
 
-                     {# Buttons for the two-step process (if used) or just the submit button #}
-                     {# You'll need to decide if you want "Confirm Payment" -> "Complete Sale" or just "Complete Sale" #}
-                     {# If just "Complete Sale", remove the confirm button and style the complete button #}
-                     {% comment %}
-                     <button type="button" id="confirm-payment-button" class="payment-action-button">Confirm Payment</button>
-                     <button type="submit" name="complete_sale" id="complete-sale-button" class="payment-action-button" style="display: none;">Complete Sale</button>
-                     {% endcomment %}
-
-                     {# If only one button is needed to trigger the final submission #}
                       <button type="submit" name="complete_sale" id="complete-sale-button" class="payment-action-button complete-sale-button">Complete Sale</button>
 
 
-                     {# Area to display messages in the modal #}
                      <div id="payment-modal-message" style="color: red; margin-top: 10px;"></div>
 
-                 </div> {# End payment-details #}
-            </form> {# End form inside modal #}
-        </div> {# End modal-content #}
-    </div> {# End payment-modal #}
-    {# --- End Modal HTML --- #}
+                 </div>
+            </form>
+        </div>
+    </div>
 
 
 {% block scripts_extra %}

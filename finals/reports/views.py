@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.db import transaction
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models.functions import TruncDate
+from django.db.models import Value
 from cashier.models import Order, Sale, SaleExtra
 from inventory.models import Product, Inventory, Extra
 from users.models import Employee
@@ -27,6 +28,8 @@ def is_cashier(user):
 @user_passes_test(is_cashier, login_url='/')
 def reports(request):
     completed_sales_queryset = Sale.objects.filter(is_completed=True)
+    total_product_orders_queryset = Order.objects.all()
+    total_extra_orders_queryset = SaleExtra.objects.all()
 
     start_date_str = request.GET.get('start_date')
     end_date_str = request.GET.get('end_date')
@@ -39,6 +42,8 @@ def reports(request):
             start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
             start_datetime = timezone.make_aware(datetime.combine(start_date, time.min), timezone.get_current_timezone())
             completed_sales_queryset = completed_sales_queryset.filter(sdate__gte=start_datetime)
+            total_product_orders_queryset = total_product_orders_queryset.filter(tid__sdate__gte=start_datetime)
+            total_extra_orders_queryset = total_extra_orders_queryset.filter(tid__sdate__gte=start_datetime)
         except ValueError:
             messages.error(request, "Invalid start date format.")
 
@@ -47,6 +52,8 @@ def reports(request):
             end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
             end_datetime = timezone.make_aware(datetime.combine(end_date, time.max), timezone.get_current_timezone())
             completed_sales_queryset = completed_sales_queryset.filter(sdate__lte=end_datetime)
+            total_product_orders_queryset = total_product_orders_queryset.filter(tid__sdate__lte=end_datetime)
+            total_extra_orders_queryset = total_extra_orders_queryset.filter(tid__sdate__lte=end_datetime)
         except ValueError:
             messages.error(request, "Invalid end date format.")
 
@@ -57,16 +64,20 @@ def reports(request):
     total_revenue = total_revenue_aggregation['total_sum'] if total_revenue_aggregation['total_sum'] is not None else Decimal(0)
 
 
-    inventory_summary = Product.objects.annotate(
-        total_remaining_quantity=Sum('inventory__pquantity')
-    ).order_by('pname')
+    inventory_summary = Product.objects.annotate(total_remaining_quantity=Sum('inventory__pquantity')).order_by('pname')
 
-    context = {
-        'completed_sales': completed_sales,
-        'total_revenue': total_revenue,
-        'start_date': start_date,
-        'end_date': end_date,
-        'inventory_summary': inventory_summary,
-    }
+
+    total_product_orders = total_product_orders_queryset.values('pid__pname').annotate(total_ordered_quantity=Sum(Value(1))).order_by('pid__pname')
+
+    total_extra_orders = total_extra_orders_queryset.values('exid__exname').annotate(total_ordered_quantity=Sum(Value(1))).order_by('exid__exname')
+
+    context = {}
+    context['completed_sales'] = completed_sales
+    context['total_revenue'] = total_revenue
+    context['start_date'] = start_date
+    context['end_date'] = end_date
+    context['inventory_summary'] = inventory_summary
+    context['total_product_orders'] = total_product_orders
+    context['total_extra_orders'] = total_extra_orders
 
     return render(request, 'reports/reports.html', context)
