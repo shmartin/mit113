@@ -9,14 +9,87 @@ html, body {
     flex-direction: column;
 }
 
+main {
+    max-height: 100%;
+    overflow-y: hidden;
+    overflow: hidden;
+}
+
+nav {
+    padding: 1rem;
+    background-color: #087830;
+    color: black;
+    font-size: 2.5rem;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout {
+    display: inline-block;
+}
+
+.logout-button {
+    font-size: 2.5rem;
+    background-color: rgba(0,0,0,0);
+    color: whitesmoke;
+    border: none;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    opacity: .85;
+}
+
+h1, p {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+a:hover {
+    opacity: .85;
+}
+
+.store-info h1 {
+    margin: 0 0 5px 0;
+    font-size: 2em;
+}
+
+.store-info p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #ddd;
+}
+
+.user-actions button {
+    background: none;
+    color: white;
+    border: 1px solid white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.user-actions button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* POS Main Layout */
 .pos-main {
     display: flex;
     flex-grow: 1;
     padding: 20px;
     gap: 20px;
-    min-height: 0; 
+    min-height: 0;
 }
 
+/* Left Panel Layout */
 .left-panel {
     flex: 2;
     display: flex;
@@ -26,12 +99,13 @@ html, body {
     overflow: hidden;
 }
 
+/* Right Panel Layout */
 .right-panel {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    min-height: 0; 
+    min-height: 0;
     overflow: hidden;
 }
 
@@ -40,14 +114,53 @@ html, body {
     flex-direction: column;
     flex-grow: 1;
     min-height: 0;
+    margin: 0;
+    padding: 0;
 }
 
-/* Left Panel Sections */
-.left-panel .product-list {
+
+/* Panel Section Base Styles */
+.product-categories, .product-list, .quick-input, .transaction-area, .payment-area {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.product-categories h2, .product-list h2, .quick-input h2, .transaction-area h2, .payment-area h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+
+/* Product Categories Styles (assuming it might be used later) */
+.product-categories ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.product-categories ul li {
+    margin-bottom: 10px;
+}
+
+.product-categories ul li a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.product-categories ul li a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Meals and Extras List within Left Panel */
+.left-panel .product-list {
     display: flex;
     flex-direction: column;
     min-height: 0;
@@ -55,28 +168,18 @@ html, body {
 }
 
 
-.left-panel .product-list h2 {
-    flex-shrink: 0;
-    margin-top: 0;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-}
-
-.left-panel .product-list:first-child { 
+.meals-list form, .extras-list form {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
 
-.left-panel .product-list:last-child {
-    flex-shrink: 0;
-    /* max-height: 200px; */
-}
-
-
+/* Product Grid Styles */
 .product-list .product-grid {
     max-height: none;
-    overflow-y: auto; 
+    overflow-y: auto;
     flex-grow: 1;
 
     display: grid;
@@ -84,34 +187,88 @@ html, body {
     gap: 15px;
 }
 
-/* Right Panel - Transaction Area and Payment Button */
+/* Product Card Styles */
+.product-list .product-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 2%;
+    text-align: center;
+}
+
+.product-list .product-card img {
+    max-width: 100%;
+    height: 20vh;
+    border-radius: 10%;
+    margin-bottom: 5px;
+    object-fit: cover;
+}
+
+.product-list .product-card h3 {
+    margin: 5px 0;
+    font-size: 1em;
+}
+
+.product-list .product-card .price {
+    display: block;
+    color: #5cb85c;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.product-list .product-card .add-to-cart {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.product-list .product-card .add-to-cart:hover {
+    background-color: #0056b3;
+}
+
+.quick-input input[type="text"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.quick-input button {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.quick-input button:hover {
+    background-color: #5a6268;
+}
+
+/* Right Panel - Transaction Area */
 .transaction-area {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    min-height: 0; 
+    min-height: 0;
     margin-bottom: 20px;
+    overflow: hidden;
 }
 
-.transaction-area h2 {
-    flex-shrink: 0;
-    margin-top: 0;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-}
-
+/* Transaction Items List */
 .transaction-items {
     list-style: none;
     padding: 0;
     margin: 0;
-    max-height: none;
     flex-grow: 1;
-    overflow-y: auto;
+    overflow-y: scroll;
     padding-right: 15px;
     min-height: 0;
 }
@@ -151,6 +308,7 @@ html, body {
     margin-left: 10px;
 }
 
+/* Transaction Summary */
 .transaction-summary {
     flex-shrink: 0;
     margin-top: 15px;
@@ -170,7 +328,6 @@ html, body {
     border-top: 1px solid #eee;
 }
 
-/* The container for the Payment button */
 .payment-button-container {
     flex-shrink: 0;
     background-color: white;
@@ -179,7 +336,7 @@ html, body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
-.payment-button { 
+.payment-button {
     display: block;
     width: 100%;
     padding: 15px;
@@ -205,11 +362,10 @@ html, body {
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%; 
+    height: 100%;
     overflow: auto;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
-    /* padding-top: 60px; Remove or adjust this if it affects centering */
 }
 
 .modal-content {
@@ -232,16 +388,15 @@ html, body {
     position: absolute;
     top: 10px;
     right: 15px;
+    cursor: pointer;
 }
 
 .close-button:hover,
 .close-button:focus {
     color: black;
     text-decoration: none;
-    cursor: pointer;
 }
 
-/* for elements inside the modal payment form */
 #payment-modal .payment-details p {
 margin-bottom: 10px;
 font-size: 1.1em;
@@ -286,10 +441,19 @@ transition: background-color 0.2s ease;
 #payment-modal .keypad button:hover {
 background-color: #eee;
 }
-#payment-modal .keypad .clear { background-color: #ff6b6b; color: white; }
-#payment-modal .keypad .clear:hover { background-color: #e05858; }
-#payment-modal .keypad .backspace { font-size: 1.5em; }
 
+#payment-modal .keypad .clear {
+background-color: #ff6b6b;
+color: white;
+}
+
+#payment-modal .keypad .clear:hover {
+background-color: #e05858;
+}
+
+#payment-modal .keypad .backspace {
+font-size: 1.5em;
+}
 
 .complete-sale-button {
     display: block;
@@ -309,11 +473,8 @@ background-color: #eee;
     background-color: #1e7e34;
 }
 
+@media (max-width: 768px) {
 
-/* Responsive Design */
-
-/* responsive on smaller screens */
-@media (max-width: 768px) { 
     .pos-main {
         flex-direction: column;
         padding: 10px;
@@ -322,12 +483,11 @@ background-color: #eee;
 
     .left-panel, .right-panel {
         flex: none;
-        width: 100%; 
+        width: 100%;
         max-height: 50vh;
         overflow-y: auto;
     }
 
-    /* Adjust scrollable areas inside panels */
     .left-panel .product-list {
         flex-grow: 0;
         max-height: none;
@@ -336,7 +496,7 @@ background-color: #eee;
 
     .left-panel .product-list .product-grid {
         max-height: none;
-        overflow-y: visible;
+        overflow-y: visible; 
     }
 
     .right-panel {

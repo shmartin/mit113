@@ -10,8 +10,8 @@
         {% endblock %}
         | POS
     </title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block head_extra %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% endblock %}
     {% block script_extra %}
     {% endblock %}
@@ -29,8 +29,6 @@
         {% block content %}
         {% endblock %}
     </main>
-    <footer>
-        <p>&copy Juan Martin Abad</p>
-    </footer>
+    <footer>&copy Juan Martin Abad</footer>
 </body>
 </html>
